@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CustomerController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +18,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', [CustomerController::class, 'index']);
-//
+Route::get('/setup', function (){
+    $credential = [
+        'email' => 'admin@admin.com',
+        'password' => 'secret123'
+        ];
+
+    if (!Auth::attempt($credential)) {
+        $user = new User();
+        $user->name = 'Admin';
+        $user->email = $credential['email'];
+        $user->password = Hash::make($credential['password']);
+        $user->save();
+
+        if (Auth::attempt($credential)){
+            $user = Auth::user();
+
+            $adminToken = $user->createToken('admin-token', ['create', 'update', 'delete']);
+            $updateToken = $user->createToken('update-token', ['create', 'update']);
+            $basicToken = $user->createToken('basic-token');
+
+            return [
+                'admin' => $adminToken->plainTextToken,
+                'update' => $updateToken->plainTextToken,
+                'basic' => $basicToken->plainTextToken,
+            ];
+
+        }
+    }
+});
+
