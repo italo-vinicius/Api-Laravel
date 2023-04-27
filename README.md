@@ -1,66 +1,60 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API REST para Gerenciamento de Clientes e Notas Fiscais
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é uma API REST desenvolvida com o framework Laravel e tem como objetivo gerenciar clientes e notas fiscais.
 
-## About Laravel
+----
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Funcionalidades
+- Cadastrar clientes
+- Consultar clientes
+- Atualizar clientes
+- Cadastrar notas fiscais para um cliente
+- Consultar notas fiscais de um cliente
+- Atualizar notas fiscais
+- As rotas estão protegidas pelo middleware auth:sanctum, que exige autenticação para acessar as informações. Isso é importante para garantir a segurança dos dados dos clientes e das notas fiscais.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Configuração
+Para utilizar a API, siga os passos abaixo:
 
-## Learning Laravel
+- Faça o clone do repositório para a sua máquina local.
+- Abra o terminal na pasta raiz do projeto e execute o comando `composer install` para instalar as dependências do Laravel.
+- Crie um arquivo .env na raiz do projeto, com base no arquivo .env.example que já está presente. Este arquivo irá conter as configurações do banco de dados, URL e outras informações necessárias para o funcionamento da aplicação.
+- Execute o comando `php artisan key:generate` para gerar a chave de criptografia da aplicação.
+- Execute o comando `php artisan migrate` para criar as tabelas do banco de dados.
+- Execute o comando `php artisan db:seed` para popular o banco de dados com informações de exemplo (opcional).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Rotas
+A API utiliza as seguintes rotas:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- /api/v1/customers <br>
+GET: Retorna uma lista de todos os clientes cadastrados no sistema. <br>
+POST: Cria um novo cliente no sistema.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- /api/v1/customers/{id} <br>
+GET: Retorna informações sobre um cliente específico. <br>
+PUT: Atualiza as informações de um cliente existente. <br>
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- /api/v1/invoices <br>
+GET: Retorna uma lista de todas as notas fiscais cadastradas no sistema. <br>
+POST: Cria uma nova nota fiscal no sistema. <br>
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- /api/v1/invoices/{id} <br>
+GET: Retorna informações sobre uma nota fiscal específica. <br>
+PUT: Atualiza as informações de uma nota fiscal existente. <br>
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- /api/v1/invoices/bulk <br>
+POST: Cria múltiplas notas fiscais de uma vez, utilizando os dados enviados no corpo da requisição.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- /setup <br> 
+GET: Cria os tokens de acesso
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  
